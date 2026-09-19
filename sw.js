@@ -1,4 +1,4 @@
-const CACHE_NAME = 'study-portal-v1';
+const CACHE_NAME = 'alp-portal-v1';
 const ASSETS = [
   './',
   './index.html',
