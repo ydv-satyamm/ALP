@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Study Portal - Dynamic Atmospheric Theme</title>
+  <title>Study Portal</title>
   
   <meta name="theme-color" content="#18091f">
+  
+  <!-- ANDROID & CHROME PWA SUPPORT -->
   <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- IOS / IPAD / SAFARI PWA SUPPORT -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Study Portal">
-  
-  <!-- APP ICONS -->
-  <link rel="apple-touch-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXXcp7oF4Km9FFnc_fgj8RFrnvRui7M0TBRhwqmVtXiQ&s=10">
-  <link rel="icon" type="image/jpeg" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXXcp7oF4Km9FFnc_fgj8RFrnvRui7M0TBRhwqmVtXiQ&s=10">
-
-  <!-- REAL MANIFEST LINK -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon.png">
 
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -150,7 +151,6 @@
       overflow: hidden;
     }
 
-    /* Atmospheres */
     .morning-sun-glow {
       position: absolute;
       top: -80px;
@@ -542,11 +542,6 @@
       font-size: 1.15rem;
     }
 
-    .sub-item .fa-brands.fa-youtube {
-      color: #ff0000;
-      font-size: 1.15rem;
-    }
-
     .live-wrapper {
       display: inline-flex;
       align-items: center;
@@ -656,7 +651,70 @@
       background: #ff1a1a;
     }
 
-    /* MODAL POPUP */
+    .schedule-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .schedule-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+
+    .schedule-header a {
+      color: #38bdf8;
+      font-size: 0.82rem;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    @media (min-width: 580px) {
+      .schedule-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .schedule-entry-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      border-left: 2.5px solid var(--accent-color);
+    }
+
+    .schedule-subject {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .schedule-time {
+      color: #94a3b8;
+      font-size: 0.76rem;
+      font-family: monospace;
+    }
+
+    /* PWA POPUP DIALOG */
     .pwa-modal-overlay {
       display: none;
       position: fixed;
@@ -762,70 +820,6 @@
       color: #fff;
     }
 
-    /* Timetable */
-    .schedule-box {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 12px 14px;
-      margin-top: 4px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .schedule-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 8px;
-    }
-
-    .schedule-header a {
-      color: #38bdf8;
-      font-size: 0.82rem;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .schedule-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 6px;
-    }
-
-    @media (min-width: 580px) {
-      .schedule-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .schedule-entry-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      border-left: 2.5px solid var(--accent-color);
-    }
-
-    .schedule-subject {
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .schedule-time {
-      color: #94a3b8;
-      font-size: 0.76rem;
-      font-family: monospace;
-    }
-
     footer {
       text-align: center;
       margin-top: 40px;
@@ -919,13 +913,14 @@
 </head>
 <body class="theme-night">
 
+  <!-- INSTALL AS APP POPUP MODAL (SHOWS LOGO FROM icon.png) -->
   <div class="pwa-modal-overlay" id="pwaModalOverlay">
     <div class="pwa-modal-card">
       <div class="pwa-modal-icon-wrap">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXXcp7oF4Km9FFnc_fgj8RFrnvRui7M0TBRhwqmVtXiQ&s=10" alt="App Icon">
+        <img src="icon.png" alt="Study Portal Logo">
       </div>
       <h2>Study Portal</h2>
-      <p>Aapke sabhi important classes aur study links ek jagah. Isko seedhe apne Mobile / PC Home Screen me install karein!</p>
+      <p id="modalDesc">Aapke sabhi important classes aur study links ek jagah. Isko seedhe apne Mobile / Tab / PC par install karein!</p>
       <div class="pwa-modal-buttons">
         <button class="btn-install-pwa" id="modalInstallBtn">
           <i class="fa-solid fa-download"></i> INSTALL AS APP
@@ -982,13 +977,13 @@
         </div>
       </a>
 
-      <!-- 2. FOLDER: MATHEMATICS -->
+      <!-- 2. MATH FOLDER -->
       <div class="expandable-container searchable-entry" id="mathContainer">
         <div class="link-card" onclick="toggleSubtopics('mathContainer')">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqVydYdqayywRn2Fz77GWMNqJljFHR7OZLGcEg4jpArg&s=10" alt="Mathematics" class="card-poster">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqVydYdqayywRn2Fz77GWMNqJljFHR7OZLGcEg4jpArg&s=10" alt="Math Folder" class="card-poster">
           <div class="card-info">
-            <h3>MATHEMATICS BATCHES <span class="heart-mini">💖</span></h3>
-            <p>Aditya Sir VOD 3.0 & Daftar Series</p>
+            <h3>MATHEMATICS SPECIAL <span class="heart-mini">💖</span></h3>
+            <p>Aditya Ranjan Sir VOD 3.0 & Daftar Series</p>
           </div>
           <div class="arrow-box">
             <i class="fa-solid fa-chevron-down chevron-arrow"></i>
@@ -998,7 +993,7 @@
         <div id="mathList" class="subtopics-list">
           <a href="https://t.me/VIDYAGRAM_MATH_VOD" target="_blank" class="sub-item">
             <div class="sub-item-content">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWMMX_qeIt6KVHls2N-d0YJChQzqfIXtAWRHmn1x353TdEzEuSJoUcmbg&s=10" alt="Aditya Math VOD" class="sub-poster">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWMMX_qeIt6KVHls2N-d0YJChQzqfIXtAWRHmn1x353TdEzEuSJoUcmbg&s=10" alt="Aditya Math VOD 3.0" class="sub-poster">
               <span>1. ADITYA MATH VOD 3.0 (Telegram)</span>
             </div>
             <i class="fa-brands fa-telegram"></i>
@@ -1007,46 +1002,44 @@
           <a href="https://vidyagram.online/new-courses/63/content?activeTab=Content" target="_blank" class="sub-item">
             <div class="sub-item-content">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVylVGjRy7akJxotXtb3c7tJwOypxKZBc5gMjP25oBDg&s" alt="Daftar Series Aditya" class="sub-poster">
-              <span>2. DAFTAR SERIES - ADITYA SIR</span>
+              <span>2. DAFTAR SERIES - ADITYA SIR (Web Portal)</span>
             </div>
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
         </div>
       </div>
 
-      <!-- 3. SACHIN CDP PAPER 1 -->
+      <!-- 3. CDP SPECIAL -->
       <a href="https://t.me/c/3972938783/114/115" target="_blank" class="link-card searchable-entry">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ94jluufUVEnOO9mxaAa8f1DdlYvmnvdhSU4ghDcYrtw&s=10" alt="Sachin CDP Paper 1" class="card-poster">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ94jluufUVEnOO9mxaAa8f1DdlYvmnvdhSU4ghDcYrtw&s=10" alt="Sachin Sir CDP" class="card-poster">
         <div class="card-info">
-          <h3>SACHIN CDP PAPER 1 <span class="heart-mini">💖</span></h3>
-          <p>Child Development & Pedagogy</p>
+          <h3>CDP - SACHIN SIR (PAPER 1) <span class="heart-mini">💖</span></h3>
+          <p>Child Development & Pedagogy Course</p>
         </div>
         <div class="arrow-box">
           <i class="fa-brands fa-telegram"></i>
         </div>
       </a>
 
-      <!-- 4. REASONING PIYUSH SIR -->
+      <!-- 4. REASONING SPECIAL -->
       <a href="https://vividxreasoningspl60batch.edgeone.app/" target="_blank" class="link-card searchable-entry">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm0r6WrPFjFRGj1YmaQ8ivcmfx6KYxxXS6a3uYrhRwLw&s=10" alt="Reasoning Piyush Sir" class="card-poster">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm0r6WrPFjFRGj1YmaQ8ivcmfx6KYxxXS6a3uYrhRwLw&s=10" alt="Piyush Sir Reasoning" class="card-poster">
         <div class="card-info">
-          <h3>REASONING SPL 60 - PIYUSH SIR <span class="heart-mini">💖</span></h3>
-          <p>Complete Reasoning Practice & Concept Batch</p>
+          <h3>REASONING SPECIAL - PIYUSH SIR <span class="heart-mini">💖</span></h3>
+          <p>Reasoning Special 60 Batch</p>
         </div>
         <div class="arrow-box">
           <i class="fa-solid fa-arrow-up-right-from-square"></i>
         </div>
       </a>
 
-      <!-- 5. FOLDER: ENGLISH -->
+      <!-- 5. ENGLISH FOLDER -->
       <div class="expandable-container searchable-entry" id="englishContainer">
         <div class="link-card" onclick="toggleSubtopics('englishContainer')">
-          <div class="card-icon" style="color: #a855f7; border-color: rgba(168,85,247,0.35); background: rgba(168,85,247,0.15);">
-            <i class="fa-solid fa-book-open-reader"></i>
-          </div>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8p2KtrsPGqAoLvRHxRl-txdz8g1htVjoz6LNIZ0ZQsQ&s=10" alt="English Special" class="card-poster">
           <div class="card-info">
-            <h3>ENGLISH SPECIAL FOLDER <span class="heart-mini">💖</span></h3>
-            <p>English 4 Sem & Aman Vasisth Sir</p>
+            <h3>ENGLISH SPECIAL BATCHES <span class="heart-mini">💖</span></h3>
+            <p>Aman Vashisth Sir & English 4 Sem</p>
           </div>
           <div class="arrow-box">
             <i class="fa-solid fa-chevron-down chevron-arrow"></i>
@@ -1054,31 +1047,31 @@
         </div>
 
         <div id="englishList" class="subtopics-list">
-          <a href="https://parikshaveer.akamai.net.in/new-courses/22/content?activeTab=Content" target="_blank" class="sub-item">
+          <a href="https://ipad-view.vercel.app/#/batch/6a9c1a6b4d63c7a6710471a3" target="_blank" class="sub-item">
             <div class="sub-item-content">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4XOZIc9q_9GSulLzVC1tBcHFuJlFgduDWuoJ37bbT4A&s=10" alt="English 4 Sem" class="sub-poster">
-              <span>1. ENGLISH 4 SEMESTER</span>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-XnTQQxfpz7tx3qFr2coOrszvEVFcZfCM19EUzHKxwQ&s" alt="Aman Vashisth Sir" class="sub-poster">
+              <span>1. AMAN VASHISTH SIR BATCH</span>
             </div>
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
 
-          <a href="https://ipad-view.vercel.app/#/batch/6a9c1a6b4d63c7a6710471a3" target="_blank" class="sub-item">
+          <a href="https://parikshaveer.akamai.net.in/new-courses/22/content?activeTab=Content" target="_blank" class="sub-item">
             <div class="sub-item-content">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-XnTQQxfpz7tx3qFr2coOrszvEVFcZfCM19EUzHKxwQ&s" alt="Aman Vasisth Sir" class="sub-poster">
-              <span>2. AMAN VASISTH SIR</span>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4XOZIc9q_9GSulLzVC1tBcHFuJlFgduDWuoJ37bbT4A&s=10" alt="English 4 Sem" class="sub-poster">
+              <span>2. ENGLISH 4 SEMESTER (ParikshaVeer)</span>
             </div>
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
         </div>
       </div>
 
-      <!-- 6. FOLDER: SCIENCE -->
+      <!-- 6. SCIENCE FOLDER -->
       <div class="expandable-container searchable-entry" id="scienceContainer">
         <div class="link-card" onclick="toggleSubtopics('scienceContainer')">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeFK8dI9EipWHNP2ayddWofyd5d0Ne-PEEP3qumFKCAA&s=10" alt="Science" class="card-poster">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeFK8dI9EipWHNP2ayddWofyd5d0Ne-PEEP3qumFKCAA&s=10" alt="General Science" class="card-poster">
           <div class="card-info">
-            <h3>SCIENCE COMPLETE SPECIAL <span class="heart-mini">💖</span></h3>
-            <p>Radhika Mam, Physics, Chemistry & Biology</p>
+            <h3>GENERAL SCIENCE SPECIAL <span class="heart-mini">💖</span></h3>
+            <p>Radhika Mam & Science Magnet (Phy, Chem, Bio)</p>
           </div>
           <div class="arrow-box">
             <i class="fa-solid fa-chevron-down chevron-arrow"></i>
@@ -1089,7 +1082,7 @@
           <a href="https://ipad-view.vercel.app/#/batch/6a4e35315bac0ae4bab52444" target="_blank" class="sub-item">
             <div class="sub-item-content">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3gZFs9kRiYDbZNFN3isrAKeK57X-XCBUz3EyVLb-Uve_yflAXMueUWPIW&s=10" alt="Radhika Mam" class="sub-poster">
-              <span>1. RADHIKA MAM SCIENCE</span>
+              <span>1. RADHIKA MAM SCIENCE BATCH</span>
             </div>
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
@@ -1097,7 +1090,7 @@
           <a href="https://t.me/c/3600115824/1546/1547" target="_blank" class="sub-item">
             <div class="sub-item-content">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIme9YE7smlQSGAAsyOFId3XHQjCAHb9-9D9XMSTdNRw&s=10" alt="Physics Science Magnet" class="sub-poster">
-              <span>2. PHYSICS - SCIENCE MAGNET</span>
+              <span>2. PHYSICS — SCIENCE MAGNET</span>
             </div>
             <i class="fa-brands fa-telegram"></i>
           </a>
@@ -1105,7 +1098,7 @@
           <a href="https://t.me/c/3600115824/1944/1945" target="_blank" class="sub-item">
             <div class="sub-item-content">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjz5Wl-9V8jf8SY5CGy6QF4wO1Ig9xUsL4Qj5PP3NoPg&s=10" alt="Chemistry Science Magnet" class="sub-poster">
-              <span>3. CHEMISTRY - SCIENCE MAGNET</span>
+              <span>3. CHEMISTRY — SCIENCE MAGNET</span>
             </div>
             <i class="fa-brands fa-telegram"></i>
           </a>
@@ -1113,7 +1106,7 @@
           <a href="https://t.me/c/3600115824/1542/1543" target="_blank" class="sub-item">
             <div class="sub-item-content">
               <img src="https://www.shutterstock.com/shutterstock/photos/2309632321/display_1500/stock-vector-biology-science-biology-colorful-illustration-with-doodle-icons-biological-images-and-objects-2309632321.jpg" alt="Biology Science Magnet" class="sub-poster">
-              <span>4. BIOLOGY - SCIENCE MAGNET</span>
+              <span>4. BIOLOGY — SCIENCE MAGNET</span>
             </div>
             <i class="fa-brands fa-telegram"></i>
           </a>
@@ -1464,19 +1457,30 @@
       });
     });
 
-    // PWA Service Worker & Install Flow
+    // =========================================================
+    // SERVICE WORKER REGISTRATION (PWA)
+    // =========================================================
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch((err) => {
-          console.warn('Service Worker registration skipped:', err);
-        });
+        navigator.serviceWorker.register('sw.js')
+          .then((reg) => console.log('Service Worker Registered!', reg))
+          .catch((err) => console.warn('Service Worker registration skipped:', err));
       });
     }
 
+    // =========================================================
+    // UNIVERSAL PWA ENGINE (ANDROID / TABLET / IOS / SAFARI / PC)
+    // =========================================================
     let deferredPrompt = null;
     const pwaModal = document.getElementById('pwaModalOverlay');
     const modalInstallBtn = document.getElementById('modalInstallBtn');
+    const modalDesc = document.getElementById('modalDesc');
 
+    // Device checks
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+    // Android/Desktop prompt event
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
@@ -1484,13 +1488,16 @@
     });
 
     function showPwaModal() {
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
       const dismissed = sessionStorage.getItem('pwa_dismissed');
       if (!isStandalone && !dismissed && pwaModal) {
+        if (isIOS && modalDesc) {
+          modalDesc.innerHTML = "iPhone / iPad par install karne ke liye neeche diye button par click karein aur instructions follow karein.";
+        }
         pwaModal.style.display = 'flex';
       }
     }
 
+    // Auto popup trigger
     window.addEventListener('load', () => {
       setTimeout(() => {
         showPwaModal();
@@ -1500,14 +1507,20 @@
     if (modalInstallBtn) {
       modalInstallBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
+          // Android / Chrome / Windows / Mac
           deferredPrompt.prompt();
           const { outcome } = await deferredPrompt.userChoice;
           if (outcome === 'accepted' && pwaModal) {
             pwaModal.style.display = 'none';
           }
           deferredPrompt = null;
+        } else if (isIOS) {
+          // iOS Safari specific guide
+          alert("iPhone / iPad par install karne ke liye:\n1. Safari me neeche 'Share' button (⎋) dabayein.\n2. Thoda scroll karke 'Add to Home Screen' (+) select karein.\n3. Top-right par 'Add' dabayein!");
+          dismissPwaModal();
         } else {
-          alert('Home Screen par install karne ke liye:\n1. Browser ke right-top 3 dots (⋮) ya Share button dabayein.\n2. "Install App" ya "Add to Home Screen" par tap karein.');
+          // Tablet / Browser direct menu fallback
+          alert("Home Screen par install karne ke liye:\n1. Browser ke right-top 3 dots (⋮) dabayein.\n2. 'Install App' ya 'Add to Home Screen' par click karein.");
           dismissPwaModal();
         }
       });
