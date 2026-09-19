@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Study Portal</title>
+  <title>ALP PORTAL</title>
   
   <meta name="theme-color" content="#18091f">
   
-  <!-- ANDROID & CHROME PWA SUPPORT -->
+  <!-- ANDROID & CHROME PWA -->
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="icon" type="image/png" href="icon.png">
   <link rel="manifest" href="manifest.json">
 
-  <!-- IOS / IPAD / SAFARI PWA SUPPORT -->
+  <!-- IOS / IPAD / SAFARI PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Study Portal">
+  <meta name="apple-mobile-web-app-title" content="ALP PORTAL">
   <link rel="apple-touch-icon" href="icon.png">
 
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -714,7 +714,6 @@
       font-family: monospace;
     }
 
-    /* PWA POPUP DIALOG */
     .pwa-modal-overlay {
       display: none;
       position: fixed;
@@ -913,13 +912,13 @@
 </head>
 <body class="theme-night">
 
-  <!-- INSTALL AS APP POPUP MODAL (SHOWS LOGO FROM icon.png) -->
+  <!-- INSTALL AS APP POPUP DIALOG -->
   <div class="pwa-modal-overlay" id="pwaModalOverlay">
     <div class="pwa-modal-card">
       <div class="pwa-modal-icon-wrap">
-        <img src="icon.png" alt="Study Portal Logo">
+        <img src="icon.png" alt="ALP Portal Logo">
       </div>
-      <h2>Study Portal</h2>
+      <h2>ALP PORTAL</h2>
       <p id="modalDesc">Aapke sabhi important classes aur study links ek jagah. Isko seedhe apne Mobile / Tab / PC par install karein!</p>
       <div class="pwa-modal-buttons">
         <button class="btn-install-pwa" id="modalInstallBtn">
@@ -940,7 +939,7 @@
         <span id="badgeText">Night Focus</span>
       </div>
 
-      <h1>Study Portal</h1>
+      <h1>ALP PORTAL</h1>
       <p>Aapke sabhi important classes aur study links ek jagah 💕</p>
     </header>
 
@@ -1385,7 +1384,6 @@
       });
     }
 
-    /* Swipe Particles Engine */
     const swipeIcons = ['fa-heart', 'fa-sparkles', 'fa-star', 'fa-wand-magic-sparkles'];
     let lastSwipeTime = 0;
     let lastSwipeX = 0;
@@ -1443,7 +1441,6 @@
       lastSwipeY = e.clientY;
     });
 
-    /* 3D Tilt */
     document.querySelectorAll('.link-card').forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -1457,30 +1454,24 @@
       });
     });
 
-    // =========================================================
-    // SERVICE WORKER REGISTRATION (PWA)
-    // =========================================================
+    // PWA Service Worker Registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then((reg) => console.log('Service Worker Registered!', reg))
-          .catch((err) => console.warn('Service Worker registration skipped:', err));
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
+          .then((reg) => console.log('SW Registered:', reg))
+          .catch((err) => console.warn('SW Register Error:', err));
       });
     }
 
-    // =========================================================
-    // UNIVERSAL PWA ENGINE (ANDROID / TABLET / IOS / SAFARI / PC)
-    // =========================================================
+    // PWA Universal Install Handler
     let deferredPrompt = null;
     const pwaModal = document.getElementById('pwaModalOverlay');
     const modalInstallBtn = document.getElementById('modalInstallBtn');
     const modalDesc = document.getElementById('modalDesc');
 
-    // Device checks
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-    // Android/Desktop prompt event
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
@@ -1491,13 +1482,12 @@
       const dismissed = sessionStorage.getItem('pwa_dismissed');
       if (!isStandalone && !dismissed && pwaModal) {
         if (isIOS && modalDesc) {
-          modalDesc.innerHTML = "iPhone / iPad par install karne ke liye neeche diye button par click karein aur instructions follow karein.";
+          modalDesc.innerHTML = "iPad / iPhone par install karne ke liye neeche button dabayein.";
         }
         pwaModal.style.display = 'flex';
       }
     }
 
-    // Auto popup trigger
     window.addEventListener('load', () => {
       setTimeout(() => {
         showPwaModal();
@@ -1507,7 +1497,6 @@
     if (modalInstallBtn) {
       modalInstallBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
-          // Android / Chrome / Windows / Mac
           deferredPrompt.prompt();
           const { outcome } = await deferredPrompt.userChoice;
           if (outcome === 'accepted' && pwaModal) {
@@ -1515,12 +1504,10 @@
           }
           deferredPrompt = null;
         } else if (isIOS) {
-          // iOS Safari specific guide
-          alert("iPhone / iPad par install karne ke liye:\n1. Safari me neeche 'Share' button (⎋) dabayein.\n2. Thoda scroll karke 'Add to Home Screen' (+) select karein.\n3. Top-right par 'Add' dabayein!");
+          alert("iPad / iPhone par install karne ke liye:\n1. Safari ke Share icon (⎋) par tap karein.\n2. 'Add to Home Screen' (+) select karein.\n3. Top-right par 'Add' dabayein!");
           dismissPwaModal();
         } else {
-          // Tablet / Browser direct menu fallback
-          alert("Home Screen par install karne ke liye:\n1. Browser ke right-top 3 dots (⋮) dabayein.\n2. 'Install App' ya 'Add to Home Screen' par click karein.");
+          alert("App Install karne ke liye:\n1. Browser ke right-top 3 dots (⋮) par click karein.\n2. 'Install App' ya 'Add to Home Screen' select karein.");
           dismissPwaModal();
         }
       });
