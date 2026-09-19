@@ -7,12 +7,12 @@
   
   <meta name="theme-color" content="#18091f">
   
-  <!-- ANDROID & CHROME PWA -->
+  <!-- ANDROID & CHROME PWA SUPPORT -->
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="icon" type="image/png" href="icon.png">
   <link rel="manifest" href="manifest.json">
 
-  <!-- IOS / IPAD / SAFARI PWA -->
+  <!-- IOS / IPAD / SAFARI PWA SUPPORT -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="ALP PORTAL">
@@ -714,6 +714,7 @@
       font-family: monospace;
     }
 
+    /* PWA POPUP DIALOG */
     .pwa-modal-overlay {
       display: none;
       position: fixed;
@@ -819,6 +820,70 @@
       color: #fff;
     }
 
+    /* iOS / iPad Dynamic Floating Banner */
+    .ios-install-banner {
+      display: none;
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 440px;
+      background: rgba(30, 10, 32, 0.95);
+      border: 2px solid #00f0ff;
+      border-radius: 20px;
+      padding: 18px 20px;
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.6);
+      z-index: 999999;
+      backdrop-filter: blur(14px);
+      text-align: center;
+      animation: slideUpIos 0.4s cubic-bezier(0.2, 0.8, 0.25, 1);
+    }
+
+    @keyframes slideUpIos {
+      from { bottom: -100px; opacity: 0; }
+      to { bottom: 25px; opacity: 1; }
+    }
+
+    .ios-install-banner h3 {
+      color: #fff;
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .ios-install-banner p {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .ios-install-banner .step-badge {
+      background: rgba(0, 240, 255, 0.18);
+      border: 1px solid #00f0ff;
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: #00f0ff;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .ios-close-btn {
+      background: linear-gradient(135deg, #00f0ff 0%, #0284c7 100%);
+      color: #000;
+      border: none;
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 10px 24px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+    }
+
     footer {
       text-align: center;
       margin-top: 40px;
@@ -912,7 +977,7 @@
 </head>
 <body class="theme-night">
 
-  <!-- INSTALL AS APP POPUP DIALOG -->
+  <!-- INSTALL AS APP POPUP MODAL -->
   <div class="pwa-modal-overlay" id="pwaModalOverlay">
     <div class="pwa-modal-card">
       <div class="pwa-modal-icon-wrap">
@@ -927,6 +992,15 @@
         <button class="btn-later-pwa" onclick="dismissPwaModal()">Baad me karenge (Continue to Web)</button>
       </div>
     </div>
+  </div>
+
+  <!-- IOS / IPAD SMART VISUAL PROMPT BANNER -->
+  <div id="iosInstallBanner" class="ios-install-banner">
+    <h3><i class="fa-brands fa-apple" style="color:#00f0ff;"></i> Install ALP Portal</h3>
+    <p>
+      Safari ke Toolbar me <span class="step-badge"><i class="fa-solid fa-arrow-up-from-bracket"></i> Share</span> dabayein, fir <span class="step-badge"><i class="fa-solid fa-square-plus"></i> Add to Home Screen</span> par tap karein!
+    </p>
+    <button class="ios-close-btn" onclick="document.getElementById('iosInstallBanner').style.display='none'">Theek Hai, Samajh Gaya</button>
   </div>
 
   <div class="thunder-flash-overlay" id="thunderFlash"></div>
@@ -1463,15 +1537,17 @@
       });
     }
 
-    // PWA Universal Install Handler
+    // PWA Universal Install Engine
     let deferredPrompt = null;
     const pwaModal = document.getElementById('pwaModalOverlay');
     const modalInstallBtn = document.getElementById('modalInstallBtn');
-    const modalDesc = document.getElementById('modalDesc');
+    const iosBanner = document.getElementById('iosInstallBanner');
 
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    // Apple / iPad / iOS Detection
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
+    // Android / Windows prompt capture
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
@@ -1481,9 +1557,6 @@
     function showPwaModal() {
       const dismissed = sessionStorage.getItem('pwa_dismissed');
       if (!isStandalone && !dismissed && pwaModal) {
-        if (isIOS && modalDesc) {
-          modalDesc.innerHTML = "iPad / iPhone par install karne ke liye neeche button dabayein.";
-        }
         pwaModal.style.display = 'flex';
       }
     }
@@ -1491,11 +1564,12 @@
     window.addEventListener('load', () => {
       setTimeout(() => {
         showPwaModal();
-      }, 1200);
+      }, 1000);
     });
 
     if (modalInstallBtn) {
       modalInstallBtn.addEventListener('click', async () => {
+        // 1. Agar Android ya Desktop Chrome hai
         if (deferredPrompt) {
           deferredPrompt.prompt();
           const { outcome } = await deferredPrompt.userChoice;
@@ -1503,12 +1577,19 @@
             pwaModal.style.display = 'none';
           }
           deferredPrompt = null;
-        } else if (isIOS) {
-          alert("iPad / iPhone par install karne ke liye:\n1. Safari ke Share icon (⎋) par tap karein.\n2. 'Add to Home Screen' (+) select karein.\n3. Top-right par 'Add' dabayein!");
-          dismissPwaModal();
-        } else {
-          alert("App Install karne ke liye:\n1. Browser ke right-top 3 dots (⋮) par click karein.\n2. 'Install App' ya 'Add to Home Screen' select karein.");
-          dismissPwaModal();
+        } 
+        // 2. Agar iPad ya iPhone hai (No ugly alert, show sleek glass banner)
+        else if (isIOS) {
+          if (pwaModal) pwaModal.style.display = 'none';
+          if (iosBanner) iosBanner.style.display = 'block';
+        } 
+        // 3. Fallback
+        else {
+          if (pwaModal) pwaModal.style.display = 'none';
+          if (iosBanner) {
+            iosBanner.querySelector('p').innerHTML = "Browser menu (3-dots) dabayein aur <b>Add to Home Screen / Install</b> select karein.";
+            iosBanner.style.display = 'block';
+          }
         }
       });
     }
@@ -1520,6 +1601,7 @@
 
     window.addEventListener('appinstalled', () => {
       if (pwaModal) pwaModal.style.display = 'none';
+      if (iosBanner) iosBanner.style.display = 'none';
       deferredPrompt = null;
     });
   </script>
